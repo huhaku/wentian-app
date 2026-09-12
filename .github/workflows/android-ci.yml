@@ -33,20 +33,11 @@ jobs:
     - name: Build Debug APK
       run: ./gradlew assembleDebug
 
-    - name: Build Release APK
-      run: ./gradlew assembleRelease
-
     - name: Upload Debug APK
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
         path: app/build/outputs/apk/debug/app-debug.apk
-
-    - name: Upload Release APK
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-release
-        path: app/build/outputs/apk/release/app-release-unsigned.apk
 
   release:
     name: Create Release
@@ -64,18 +55,10 @@ jobs:
         name: app-debug
         path: ./apk
 
-    - name: Download Release APK
-      uses: actions/download-artifact@v4
-      with:
-        name: app-release
-        path: ./apk
-
     - name: Create Release
       uses: softprops/action-gh-release@v1
       with:
-        files: |
-          ./apk/app-debug.apk
-          ./apk/app-release-unsigned.apk
+        files: ./apk/app-debug.apk
         generate_release_notes: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
