@@ -107,8 +107,10 @@ logcat*
 
 # Archives
 *.zip
-*.jar
 *.aar
+
+# But allow gradle wrapper jar
+!gradle/wrapper/gradle-wrapper.jar
 
 # Test and temporary Java files
 WPSet*.java
