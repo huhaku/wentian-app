@@ -1,0 +1,125 @@
+# Built application files
+*.apk
+*.aab
+*.ap_
+*.dex
+
+# Java/Kotlin class files
+*.class
+
+# Generated files
+bin/
+gen/
+out/
+
+# Gradle files
+.gradle/
+build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Proguard folder
+proguard/
+
+# Log Files
+*.log
+
+# Android Studio / IntelliJ
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~
+
+# Sensitive files (API keys, secrets)
+secrets.properties
+*.jks
+*.keystore
+keystore.properties
+
+# Temporary files
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+*.backup
+
+# Kotlin
+*.kotlin_module
+
+# Lint
+lint-results.xml
+lint-results_files/
+
+# NDK
+obj/
+libs/
+
+# Testing
+.cxx/
+.cc/
+
+# VS Code
+.vscode/
+
+# Misc
+*.orig
+*.patch
+
+# Image files
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+
+# But allow screenshots
+!screenshots/*.png
+!screenshots/*.jpg
+!screenshots/*.jpeg
+!screenshots/*.gif
+!screenshots/*.webp
+
+# Script files
+*.ps1
+*.sh
+
+# Log and text files
+*.txt
+dump*/
+logcat*
+
+# Virtual machine files
+*.iso
+*.vmdk
+
+# Archives
+*.zip
+*.jar
+*.aar
+
+# Test and temporary Java files
+WPSet*.java
+
+# Unnecessary directories
+gradwall/
+services_extract/
+wp_extract/
+
+# Backup and extracted files
+*.bak
+framework-res.apk.bak
+services.jar
+jadx.zip

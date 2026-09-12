@@ -1,0 +1,6 @@
+# This file ensures the screenshots directory is tracked by Git
+# Add your app screenshots here:
+# - home.png (主界面)
+# - widget_small.png (小部件)
+# - widget_medium.png (中部件)
+# - widget_large.png (大部件)

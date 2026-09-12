@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Sun Circle (太阳圆) -->
+    <path
+        android:name="sun_circle"
+        android:fillColor="#FFD700"
+        android:pathData="M38,38m-12,0a12,12,0,1,1,24,0a12,12,0,1,1,-24,0"/>
+    
+    <!-- Sun Rays (太阳光芒) -->
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M38,20 L40,26 L36,26 Z"/>
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M38,56 L36,50 L40,50 Z"/>
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M20,38 L26,36 L26,40 Z"/>
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M56,38 L50,40 L50,36 Z"/>
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M26,26 L30,30 L28,32 Z"/>
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M50,50 L46,46 L48,44 Z"/>
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M50,26 L46,30 L48,32 Z"/>
+    <path
+        android:fillColor="#FFD700"
+        android:pathData="M26,50 L30,46 L28,44 Z"/>
+    
+    <!-- Cloud (云朵) -->
+    <path
+        android:name="cloud"
+        android:fillColor="#FFFFFF"
+        android:pathData="M76,64
+                          C76,58 72,54 66,54
+                          C66,48 60,44 52,44
+                          C44,44 38,50 38,56
+                          C38,56 38,56 38,56
+                          C32,56 28,60 28,66
+                          C28,72 32,76 38,76
+                          L66,76
+                          C72,76 76,72 76,66
+                          C76,66 76,64 76,64 Z"/>
+</vector>
