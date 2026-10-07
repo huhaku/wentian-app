@@ -31,6 +31,12 @@ class WeatherViewModel @Inject constructor(
     private val _currentLocation = MutableStateFlow<Location?>(null)
     val currentLocation: StateFlow<Location?> = _currentLocation
 
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing: StateFlow<Boolean> = _isRefreshing
+
+    private val _refreshError = MutableStateFlow<String?>(null)
+    val refreshError: StateFlow<String?> = _refreshError
+
     init {
         loadWeather()
     }
@@ -60,9 +66,34 @@ class WeatherViewModel @Inject constructor(
         }
     }
 
+    /**
+     * 下拉刷新：强制刷新当前页面数据（绕过缓存），不将页面切换为 Loading，保留已有内容。
+     */
     fun refreshWeather() {
-        _currentLocation.value?.let {
-            loadWeather(it)
+        val location = _currentLocation.value
+        if (location == null) {
+            loadWeather()
+            return
         }
+        if (_isRefreshing.value) return
+        viewModelScope.launch {
+            _isRefreshing.value = true
+            try {
+                // 使用仓库的强制刷新，绕过 30 分钟内存缓存
+                val weather = weatherRepository.refreshWeather(location)
+                Log.d("WeatherViewModel", "Weather refreshed: ${weather.current.temp}°")
+                _weatherState.value = WeatherState.Success(weather)
+            } catch (e: Exception) {
+                // 静默刷新失败时保留旧数据，并通过 Toast 提示用户
+                Log.e("WeatherViewModel", "Error refreshing weather", e)
+                _refreshError.value = e.message ?: "刷新失败"
+            } finally {
+                _isRefreshing.value = false
+            }
+        }
+    }
+
+    fun clearRefreshError() {
+        _refreshError.value = null
     }
 }

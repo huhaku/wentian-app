@@ -30,12 +30,14 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -68,6 +70,15 @@ fun WeatherScreen(viewModel: WeatherViewModel) {
     var showLocationDialog by remember { mutableStateOf(false) }
     var showSettingsDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current
+
+    // 刷新失败时提示用户（静默刷新保留旧数据）
+    val refreshError = viewModel.refreshError.collectAsStateWithLifecycle()
+    LaunchedEffect(refreshError.value) {
+        refreshError.value?.let { message ->
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            viewModel.clearRefreshError()
+        }
+    }
     
     Log.d("WeatherScreen", "Current state: ${weatherState.value}")
 
@@ -136,12 +147,14 @@ fun WeatherScreen(viewModel: WeatherViewModel) {
                     onDismiss = { showSettingsDialog = false }
                 )
             }
-            
-            WeatherContent(
-                weather = state.weather,
-                onLocationClick = { showLocationDialog = true },
-                onSettingsClick = { showSettingsDialog = true }
-            )
+
+            WeatherRefreshBox(viewModel = viewModel) {
+                WeatherContent(
+                    weather = state.weather,
+                    onLocationClick = { showLocationDialog = true },
+                    onSettingsClick = { showSettingsDialog = true }
+                )
+            }
         }
         is WeatherState.Error -> {
             Log.d("WeatherScreen", "Rendering Error state: ${state.message}")
@@ -191,6 +204,23 @@ fun WeatherScreen(viewModel: WeatherViewModel) {
                 }
             }
         }
+    }
+}
+
+/**
+ * 下拉刷新容器：在主页顶部继续下拉即可触发刷新当前页面数据。
+ */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun WeatherRefreshBox(viewModel: WeatherViewModel, content: @Composable () -> Unit) {
+    val isRefreshing = viewModel.isRefreshing.collectAsStateWithLifecycle()
+
+    PullToRefreshBox(
+        isRefreshing = isRefreshing.value,
+        onRefresh = { viewModel.refreshWeather() },
+        modifier = Modifier.fillMaxSize()
+    ) {
+        content()
     }
 }
 
