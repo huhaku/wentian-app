@@ -125,3 +125,12 @@ wp_extract/
 framework-res.apk.bak
 services.jar
 jadx.zip
+
+# Android system development files
+GradWall*/
+framework_dec/
+services_dec/
+*.idsig
+framework.jar
+platform.pk8
+services_patched*.jar
